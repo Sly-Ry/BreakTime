@@ -39,9 +39,17 @@ function Label({ title, changeTime, type, time, formatTime }) {
     <div id='break-label'>
         <h3 id='break-length'>{title}</h3>
         <div className='buttons'>
-          <button id='break-dec'>-</button>
+          <button className='waves-effect waves-teal btn-small btn-flat'>
+            <i className="material-icons">
+              arrow_downwards
+            </i>
+          </button>
           <h3>5</h3>
-          <button id='break-inc'>+</button>
+          <button className='waves-effect waves-teal btn-small btn-flat'>
+            <i className="material-icons">
+              arrow_upwards
+            </i>
+          </button>
         </div>
       </div>
   )
