@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import { hover } from '@testing-library/user-event/dist/hover';
 
 export default function App() {
 
@@ -39,14 +40,14 @@ function Label({ title, changeTime, type, time, formatTime }) {
     <div id='break-label'>
         <h3 id='break-length'>{title}</h3>
         <div className='buttons'>
-          <button className='waves-effect waves-teal btn-small btn-flat'>
-            <i className="material-icons">
+          <button className='btn-floating btn-flat btn-small waves-effect waves-red'>
+            <i className="material-icons red-text text-darken-4">
               arrow_downwards
             </i>
           </button>
           <h3>5</h3>
-          <button className='waves-effect waves-teal btn-small btn-flat'>
-            <i className="material-icons">
+          <button className='btn-floating btn-flat btn-small waves-effect waves-green'>
+            <i className="material-icons green-text text-darken-4">
               arrow_upwards
             </i>
           </button>
