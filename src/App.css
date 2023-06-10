@@ -3,19 +3,8 @@
   color: white;
 }
 
-body {
-  background-color: rgb(0, 0, 121);
-}
 
-.App {
-  margin-top: 20vh;
-  background-color: #00000079;
-  width: 400px;
-  height: auto;
-  text-align: center;
-  border: 2px solid rgb(0, 204, 255);
-  border-radius: 40px;
-}
+
 
 h1 {
   font-size: 55px;
@@ -32,6 +21,35 @@ h2 {
   background-color: white;
   border: none;
 } */
+
+body {
+  background-color: rgb(255, 255, 255);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer {
+  background-color: rgba(0, 0, 0, 0.705);
+  border: 3px solid rgba(68, 68, 68, 0.61);
+  border-radius: 10px;
+  width: 300px;
+}
+
+#time-left {
+  margin: 15px auto;
+  font-size: 5rem;
+  font-weight: bold;
+  color: white;
+}
+
+#time-left:active {
+  color: red;
+}
 
 .dual-container {
   display: grid;
@@ -60,12 +78,11 @@ h2 {
 
 .waves-effect {
   box-shadow: transparent;
-  transition: box-shadow .1s ease-in;
-  
+  transition: box-shadow .05s ease-in;
 }
 
 .waves-effect:hover {
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.521);
+  box-shadow: 0px 2.5px 1px rgba(0, 0, 0, 0.521);
 }
 
 .waves-red, .waves-green {
@@ -86,6 +103,15 @@ h2 {
 
 .waves-green:hover {
   background-color: rgba(0, 255, 0, 0.63);
+}
+
+.waves-light {
+  margin: 10px 12px;
+  background-color: rgba(224, 224, 224, 0.664);
+}
+
+.waves-light:hover {
+  background-color: rgb(83, 206, 255);
 }
 
 @media screen and (max-width: 580px) {

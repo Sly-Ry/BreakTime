@@ -8,6 +8,7 @@ export default function App() {
   const [breakTime, setBreakTime] = useState(5 * 60);
   const [sessionTime, setSessionTime] = useState(25 * 60);
   const [timerOn, setTimerOn] = useState(false);
+  const [onBreak, setOnBreak] = useState(true);
 
   const formatTime = (time) => {
     let minutes = Math.floor(time / 60);
@@ -39,7 +40,29 @@ export default function App() {
   }; 
 
   const controlTime = () => {
+    let second = 1000;
+    let date = new Date().getTime();
+    let nextDate = new Date().getTime() + second;
+    let onBreakTime = onBreak;
+    if (!timerOn) {
+      let interval = setInterval(() => {
+        date = new Date().getTime();
+        if (date > nextDate) {
+          setTimer((prev) => {
+            return prev - 1;
+          });
+          nextDate += second
+        }
+      }, [30]);
 
+      localStorage.clear();
+      localStorage.setItem("interval-id", interval);
+    }
+
+    if (timerOn) {
+      clearInterval(localStorage.getItem("interval-id"));
+    }
+    setTimerOn(!timerOn);
   }
 
   const resetTime = () => {
@@ -51,14 +74,38 @@ export default function App() {
   return (
     <div className="App center-align">
       <h1>BreakTime</h1>
+      <div id='timer'>
+        <h1 id='time-left'>{formatTime(timer)}</h1>
+      </div>
+      <div id='timer-control'>
+        <button 
+          className='
+            btn-floating 
+            btn-flat 
+            btn-large 
+            waves-effect 
+            waves-light
+          ' 
+          onClick={controlTime}>
+          {timerOn ? (
+            <i className="material-icons blue-text text-darken-4">pause_circle_filled</i>
+          ) : (
+            <i className="material-icons blue-text text-darken-4">play_circle_filled</i>
+          )}
+        </button>
+        <button 
+          className='
+            btn-floating 
+            btn-flat 
+            btn-large
+            waves-effect 
+            waves-light
+          ' 
+          onClick={resetTime}>
+          <i className="material-icons blue-text text-darken-4">autorenew</i>
+        </button>
+      </div>
       <div className="dual-container">
-        <Label 
-          title={"Break Length"}
-          changeTime={changeTime}
-          type={"break"}
-          time={breakTime}
-          formatTime={formatTime}
-        ></Label>
         <Label 
           title={"Session Length"}
           changeTime={changeTime}
@@ -66,25 +113,13 @@ export default function App() {
           time={sessionTime}
           formatTime={formatTime}
         ></Label>
-      </div>
-      
-      <div id='timer'>
-        <h2 id='timer-label'>Session</h2>
-        <p id='time-left'>{formatTime(timer)}</p>
-      </div>
-      <div id='timer-control'>
-        {/* <button id='start_stop'>Play/pause</button>
-        <button id='reset'>reset</button> */}
-        <button className="btn-small blue lighten-2" onClick={controlTime}>
-          {timerOn ? (
-            <i className="material-icons">pause_circle_filled</i>
-          ) : (
-            <i className="material-icons">play_circle_filled</i>
-          )}
-        </button>
-        <button className="btn-small blue lighten-2" onClick={resetTime}>
-          <i className="material-icons">autorenew</i>
-        </button>
+        <Label 
+          title={"Break Length"}
+          changeTime={changeTime}
+          type={"break"}
+          time={breakTime}
+          formatTime={formatTime}
+        ></Label>
       </div>
     </div>
   );
