@@ -1,14 +1,27 @@
 import { useState } from 'react';
 import Label from './components/Label';
+import ding from './assets/breakTimeRingDingDong.mp3'
 import './App.css';
 
 export default function App() {
 
-  const [timer, setTimer] = useState(25 * 60);
-  const [breakTime, setBreakTime] = useState(5 * 60);
-  const [sessionTime, setSessionTime] = useState(25 * 60);
+  const [timer, setTimer] = useState(1);
+  const [breakTime, setBreakTime] = useState(1300);
+  const [sessionTime, setSessionTime] = useState(5);
   const [timerOn, setTimerOn] = useState(false);
   const [onBreak, setOnBreak] = useState(true);
+  const [breakAudio, setBreakAudio] = useState(
+    new Audio(ding)
+  );
+
+  const playBreakAudio = () => {
+    breakAudio.currentTime = 17.2;
+    breakAudio.play();
+    setTimeout(() => {
+      breakAudio.pause();
+      breakAudio.currentTime = 0;
+    }, 15500);
+  }
 
   const formatTime = (time) => {
     let minutes = Math.floor(time / 60);
@@ -49,6 +62,19 @@ export default function App() {
         date = new Date().getTime();
         if (date > nextDate) {
           setTimer((prev) => {
+            if (prev <= 0 && !onBreakTime){
+              playBreakAudio();
+              onBreakTime = true;
+              setOnBreak(true);
+              return breakTime;
+            }
+            else if (prev <= 0 && onBreakTime){
+              playBreakAudio();
+              setOnBreak(false);
+              onBreakTime = false;
+              setOnBreak(false);
+              return sessionTime;
+            }
             return prev - 1;
           });
           nextDate += second
