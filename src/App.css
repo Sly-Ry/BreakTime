@@ -40,15 +40,25 @@ body {
   width: 300px;
 }
 
+#timer p {
+  position: absolute;
+  margin-left: 120px;
+  margin-top: 4px;
+  color: rgb(255, 0, 0);
+  font-weight: bold;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 #time-left {
   margin: 15px auto;
   font-size: 5rem;
   font-weight: bold;
   color: white;
-}
-
-#time-left:active {
-  color: red;
 }
 
 .dual-container {
@@ -78,7 +88,7 @@ body {
 
 .waves-effect {
   box-shadow: transparent;
-  transition: box-shadow .05s ease-in;
+  transition: box-shadow .03s ease-in;
 }
 
 .waves-effect:hover {

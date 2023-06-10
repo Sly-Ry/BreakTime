@@ -5,14 +5,16 @@ import './App.css';
 
 export default function App() {
 
+  
   const [timer, setTimer] = useState(1);
-  const [breakTime, setBreakTime] = useState(1300);
+  const [breakTime, setBreakTime] = useState(3);
   const [sessionTime, setSessionTime] = useState(5);
   const [timerOn, setTimerOn] = useState(false);
-  const [onBreak, setOnBreak] = useState(true);
+  const [onBreak, setOnBreak] = useState(false);
   const [breakAudio, setBreakAudio] = useState(
     new Audio(ding)
   );
+  const [active, setActive] = useState(false);
 
   const playBreakAudio = () => {
     breakAudio.currentTime = 17.2;
@@ -20,7 +22,7 @@ export default function App() {
     setTimeout(() => {
       breakAudio.pause();
       breakAudio.currentTime = 0;
-    }, 15500);
+    }, 15505);
   }
 
   const formatTime = (time) => {
@@ -63,21 +65,24 @@ export default function App() {
         if (date > nextDate) {
           setTimer((prev) => {
             if (prev <= 0 && !onBreakTime){
+              setActive(true);
               playBreakAudio();
               onBreakTime = true;
               setOnBreak(true);
               return breakTime;
             }
             else if (prev <= 0 && onBreakTime){
+              setActive(false);
               playBreakAudio();
-              setOnBreak(false);
               onBreakTime = false;
               setOnBreak(false);
               return sessionTime;
             }
+
             return prev - 1;
           });
-          nextDate += second
+
+          nextDate += second;
         }
       }, [30]);
 
@@ -92,6 +97,7 @@ export default function App() {
   }
 
   const resetTime = () => {
+    setActive(false);
     setTimer(25 * 60);
     setBreakTime(5 * 60);
     setSessionTime(25 * 60);
@@ -101,6 +107,7 @@ export default function App() {
     <div className="App center-align">
       <h1>BreakTime</h1>
       <div id='timer'>
+        {active && <p>On Break</p>}
         <h1 id='time-left'>{formatTime(timer)}</h1>
       </div>
       <div id='timer-control'>
