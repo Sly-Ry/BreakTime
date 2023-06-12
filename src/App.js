@@ -86,7 +86,7 @@ export default function App() {
     <div className="App center-align">
       <h1>BreakTime</h1>
       <div id='timer'>
-        {currentSession === "Break" && <p>{currentSession}</p>}
+        {currentSession === "Break" && <p>On Break</p>}
         <h1 id='time-left'>{minutes}:{seconds}</h1>
       </div>
       <div id='timer-control'>
@@ -130,83 +130,12 @@ export default function App() {
           setTime={setSessionTime}
           time={sessionTime}
         />
-        <div id='break-label'>
-          <h3 id='break-length'>Break Length</h3>
-          <div className='buttons'>
-            <button 
-              className='
-                btn-floating 
-                btn-flat 
-                btn-small 
-                waves-effect 
-                waves-red
-              '
-              onClick={() => breakTime !== 1
-                ? setBreakTime(breakTime - 1)
-                : setBreakTime(breakTime)
-              }
-            >
-              <i className="material-icons red-text text-darken-4">
-                arrow_downward
-              </i>
-            </button>
-            <h3>{breakTime}</h3>
-            <button 
-              className='
-                btn-floating 
-                btn-flat 
-                btn-small 
-                waves-effect 
-                waves-green
-              '
-              onClick={() => setBreakTime(breakTime + 1)}
-            >
-              <i className="material-icons green-text text-darken-4">
-                  arrow_upward
-              </i>
-            </button>
-          </div>
-          </div>
-        </div>
-
-        
-
-      {/* <div id='break-label'>
-        <h3 id='break-length'>Session Length</h3>
-        <div className='buttons'>
-          <button 
-            className='
-              btn-floating 
-              btn-flat 
-              btn-small 
-              waves-effect 
-              waves-red
-            '
-            onClick={() => sessionTime !== 1
-            ? setSessionTime(sessionTime - 1)
-            : setSessionTime(sessionTime)}
-          >
-            <i className="material-icons red-text text-darken-4">
-                arrow_downward
-            </i>
-          </button>
-          <h3>{sessionTime}</h3>
-          <button 
-            className='
-              btn-floating 
-              btn-flat 
-              btn-small 
-              waves-effect 
-              waves-green
-            '
-            onClick={() => setSessionTime(sessionTime + 1)}
-          >
-            <i className="material-icons green-text text-darken-4">
-              arrow_upward
-            </i>
-          </button>
-        </div>
-      </div> */}
+        <Label 
+          title={"Break Length"}
+          setTime={setBreakTime}
+          time={breakTime}
+        />
+      </div>
     </div>
   );
 }
@@ -214,7 +143,7 @@ export default function App() {
 function Label({ title, setTime, time, }) {
   return (
     <div id='break-label'>
-      <h3 id='break-length'>{title}</h3>
+      <h2 id='break-length'>{title}</h2>
       <div className='buttons'>
         <button 
           className='
