@@ -121,7 +121,8 @@ body {
 }
 
 .waves-light:hover {
-  background-color: rgb(83, 206, 255);
+  background-color: rgb(25, 43, 145);
+  color: white;
 }
 
 @media screen and (max-width: 580px) {

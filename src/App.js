@@ -4,7 +4,7 @@ import './App.css';
 
 export default function App() {
 
-  // new code 
+  // States List
   const [sessionTime, setSessionTime] = useState(25);
   const [breakTime, setBreakTime] = useState(5);
   const [counter, setCounter] = useState(1500);
@@ -14,6 +14,7 @@ export default function App() {
     new Audio(ding)
   );
 
+  // Formulars
   let minutes = 
     Math.floor(counter / 60)
     .toString()
@@ -26,6 +27,7 @@ export default function App() {
     .padStart(2, "0")
   ;
 
+  // State Effects
   useEffect(() => {
     if (timerOn === "paused"){
       return;
@@ -39,19 +41,6 @@ export default function App() {
     setCounter(sessionTime * 60);
   }, [sessionTime])
 
-  const resetTime = () => {
-    setTimerOn("paused");
-    
-    if (currentSession === "Session") {
-      setCounter(1500);
-      setSessionTime(25);
-    }
-    else if (currentSession === "Break") {
-      setCounter(1500);
-      setBreakTime(5)
-    }
-  };
-
   useEffect(() => {
     let playAudio = () => {
       breakAudio.currentTime = 17.2;
@@ -59,7 +48,7 @@ export default function App() {
       setTimeout(() => {
         breakAudio.pause();
         breakAudio.currentTime = 0;
-      }, 15505);
+      }, 4000);
     };
 
     if (counter === 0 && currentSession === 'Session'){
@@ -78,119 +67,21 @@ export default function App() {
     }
   }, [sessionTime, breakTime, counter, currentSession])
 
-  // old code
+  // Le Reset
+  const resetTime = () => {
+    setTimerOn("paused");
+    
+    if (currentSession === "Session") {
+      setCounter(1500);
+      setSessionTime(25);
+    }
+    else if (currentSession === "Break") {
+      setCounter(1500);
+      setBreakTime(5)
+    }
+  };
 
-  // const [timer, setTimer] = useState(1);
-  // // const [breakTime, setBreakTime] = useState(3);
-  // // const [sessionTime, setSessionTime] = useState(5);
-  // // const [timerOn, setTimerOn] = useState(false);
-  // const [onBreak, setOnBreak] = useState(false);
-  // // const [breakAudio, setBreakAudio] = useState(
-  // //   new Audio(ding)
-  // // );
-
-
-  // // const playBreakAudio = () => {
-  // //   breakAudio.currentTime = 17.2;
-  // //   breakAudio.play();
-  // //   setTimeout(() => {
-  // //     breakAudio.pause();
-  // //     breakAudio.currentTime = 0;
-  // //   }, 15505);
-  // // }
-
-  // // Time Formatting Function
-  // const formatTime = (time) => {
-  //   let minutes = Math.floor(time / 60);
-  //   let seconds = time % 60;
-
-  //   return (
-  //     (minutes < 10 ? "0" + minutes : minutes) + 
-  //     ":" +
-  //     (seconds < 10 ? "0" + seconds : seconds) 
-  //   );
-  // };
-
-  // // Session/Break Switch Function
-  // const switchTime = (amount, type) => {
-  //   if (type == "break"){
-  //     if (breakTime <= 60 && amount < 0){
-  //       return;
-  //     }
-  //     setBreakTime((prev) => prev + amount);
-  //   }
-  //   else {
-  //     if (sessionTime <= 60 && amount < 0){
-  //       return;
-  //     }
-  //     setSessionTime((prev) => prev + amount);
-  //     if (!timerOn){
-  //       setTimer(sessionTime + amount)
-  //     }
-  //   };
-  // };
-
-  // // Time Control Function
-  // const controlTime = () => {
-  //   let second = 1000;
-  //   let date = new Date().getTime();
-  //   let nextDate = new Date().getTime() + second;
-  //   let onBreakTime = onBreak;
-  //   console.log(onBreakTime);
-
-  //   if (!timerOn) {
-  //     let interval = setInterval(() => {
-  //       date = new Date().getTime();
-  //       if (date > nextDate){
-  //         setTimer((prev) => {
-  //           if (prev <= 0 && !onBreakTime){
-  //             // playBreakAudio();
-              
-  //             setOnBreak(onBreak);
-  //             onBreakTime = true;
-              
-  //             console.log(onBreakTime);
-
-  //             return breakTime;
-  //           }
-  //           else if (prev <= 0 && onBreakTime){
-  //             // playBreakAudio();
-              
-  //             setOnBreak(!onBreak);
-  //             onBreakTime=false;
-
-  //             console.log(onBreak);
-  //             console.log(onBreakTime);
-
-  //             return sessionTime;
-  //           }
-            
-  //           console.log(onBreakTime);
-  //           return prev - 1;
-  //         });
-
-  //         nextDate += second;
-  //       }
-  //     }, 30);
-
-  //     localStorage.clear();
-  //     localStorage.setItem("interval-id", interval);
-  //   }
-   
-
-  //   if (timerOn) {
-  //     clearInterval(localStorage.getItem("interval-id"));
-  //   }
-  //   setTimerOn(!timerOn);
-  // };
-
-  // Reset Function
-  // const resetTime = () => {
-  //   setTimer(25 * 60);
-  //   setBreakTime(5 * 60);
-  //   setSessionTime(25 * 60);
-  // };
-
+  // Application
   return (
     <div className="App center-align">
       <h1>BreakTime</h1>
@@ -234,8 +125,54 @@ export default function App() {
         </button>
       </div>
       <div className="dual-container">
-      <div id='break-label'>
-        <h3 id='break-length'>Break Length</h3>
+        <Label 
+          title={"Session Length"}
+          setTime={setSessionTime}
+          time={sessionTime}
+        />
+        <div id='break-label'>
+          <h3 id='break-length'>Break Length</h3>
+          <div className='buttons'>
+            <button 
+              className='
+                btn-floating 
+                btn-flat 
+                btn-small 
+                waves-effect 
+                waves-red
+              '
+              onClick={() => breakTime !== 1
+                ? setBreakTime(breakTime - 1)
+                : setBreakTime(breakTime)
+              }
+            >
+              <i className="material-icons red-text text-darken-4">
+                arrow_downward
+              </i>
+            </button>
+            <h3>{breakTime}</h3>
+            <button 
+              className='
+                btn-floating 
+                btn-flat 
+                btn-small 
+                waves-effect 
+                waves-green
+              '
+              onClick={() => setBreakTime(breakTime + 1)}
+            >
+              <i className="material-icons green-text text-darken-4">
+                  arrow_upward
+              </i>
+            </button>
+          </div>
+          </div>
+        </div>
+
+        
+
+      {/* <div id='break-label'>
+        <h3 id='break-length'>Session Length</h3>
         <div className='buttons'>
           <button 
             className='
@@ -245,84 +182,72 @@ export default function App() {
               waves-effect 
               waves-red
             '
-            onClick={() => breakTime !== 1
-              ? setBreakTime(breakTime - 1)
-              : setBreakTime(breakTime)
-            }
+            onClick={() => sessionTime !== 1
+            ? setSessionTime(sessionTime - 1)
+            : setSessionTime(sessionTime)}
           >
-          <i className="material-icons red-text text-darken-4">
-            arrow_downward
-          </i>
+            <i className="material-icons red-text text-darken-4">
+                arrow_downward
+            </i>
           </button>
-          <h3>{breakTime}</h3>
+          <h3>{sessionTime}</h3>
           <button 
-          className='
+            className='
               btn-floating 
               btn-flat 
               btn-small 
               waves-effect 
               waves-green
-          '
-          onClick={() => setBreakTime(breakTime + 1)}
+            '
+            onClick={() => setSessionTime(sessionTime + 1)}
           >
-          <i className="material-icons green-text text-darken-4">
+            <i className="material-icons green-text text-darken-4">
               arrow_upward
-          </i>
+            </i>
           </button>
-      </div>
         </div>
-
-      <div id='break-label'>
-            <h3 id='break-length'>Session Length</h3>
-            <div className='buttons'>
-                <button 
-                className='
-                    btn-floating 
-                    btn-flat 
-                    btn-small 
-                    waves-effect 
-                    waves-red
-                '
-                onClick={() => sessionTime !== 1
-                ? setSessionTime(sessionTime - 1)
-                : setSessionTime(sessionTime)}
-                >
-                <i className="material-icons red-text text-darken-4">
-                    arrow_downward
-                </i>
-                </button>
-                <h3>{sessionTime}</h3>
-                <button 
-                className='
-                    btn-floating 
-                    btn-flat 
-                    btn-small 
-                    waves-effect 
-                    waves-green
-                '
-                onClick={() => setSessionTime(sessionTime + 1)
-            }
-                >
-                <i className="material-icons green-text text-darken-4">
-                    arrow_upward
-                </i>
-                </button>
-            </div>
-        </div>
-        {/* <Label 
-          title={"Session Length"}
-          setBreakTimer={setSessionTime}
-          type={"session"}
-          breakTime={sessionTime}
-        ></Label>
-        <Label 
-          title={"Break Length"}
-          setBreakTimer={setBreakTime}
-          type={"break"}
-          breakTime={breakTime}
-        ></Label>
-         */}
-      </div>
+      </div> */}
     </div>
   );
+}
+
+function Label({ title, setTime, time, }) {
+  return (
+    <div id='break-label'>
+      <h3 id='break-length'>{title}</h3>
+      <div className='buttons'>
+        <button 
+          className='
+            btn-floating 
+            btn-flat 
+            btn-small 
+            waves-effect 
+            waves-red
+          '
+          onClick={() => time !== 1
+          ? setTime(time - 1)
+          : setTime(time)}
+        >
+          <i className="material-icons red-text text-darken-4">
+              arrow_downward
+          </i>
+        </button>
+        <h3>{time}</h3>
+        <button 
+          className='
+            btn-floating 
+            btn-flat 
+            btn-small 
+            waves-effect 
+            waves-green
+          '
+          onClick={() => setTime(time + 1)}
+        >
+          <i className="material-icons green-text text-darken-4">
+            arrow_upward
+          </i>
+        </button>
+      </div>
+    </div>
+  )
 }
