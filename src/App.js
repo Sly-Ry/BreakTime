@@ -149,7 +149,7 @@ function Label({ title, setTime, time, }) {
           className='
             btn-floating 
             btn-flat 
-            btn-small 
+            btn-large 
             waves-effect 
             waves-red
           '
@@ -166,7 +166,7 @@ function Label({ title, setTime, time, }) {
           className='
             btn-floating 
             btn-flat 
-            btn-small 
+            btn-large 
             waves-effect 
             waves-green
           '
